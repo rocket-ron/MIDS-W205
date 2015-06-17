@@ -1,0 +1,11 @@
+
+Task1:
+
+Write a python program that does the following:
+1) Downloads the dataset from http://www.exploredata.net/ftp/WHO.csv
+2) Creates a new dataset called 10-40.csv by extracting the records for county ids 10 to 40 and saves the result back on S3 in a bucket called "sub-datasets"
+3) Finds the range of values in each column in the original dataset
+4) Finds the county with the minimum Adult mortality rate (probability of dying between 15 to 60 years per 1000 population) male)
+
+Task2:
+Write a python program to find all the articles that have "History" in their title in the enwiki-latest-stub-articles1.xml and save all of their attributes in a CSV file.
