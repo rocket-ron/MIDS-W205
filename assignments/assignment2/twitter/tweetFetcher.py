@@ -13,11 +13,12 @@ class TweetFetcher:
 		access_token = "2030211-EKJ6n9yqbCmlQr0w2BcPZN9XlK72kMFqZRod71bd5L"
 		access_token_secret = "fUtvIV5yX37aanszf89vwkEpHGLdU7U3m3ekEstr4cjLl"
 
-		auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-		auth.set_access_token(access_token, access_token_secret)
+#		auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+		auth = tweepy.AppAuthHandler(consumer_key, consumer_secret)
+#		auth.set_access_token(access_token, access_token_secret)
 		self.api = tweepy.API(auth_handler=auth,wait_on_rate_limit=True,wait_on_rate_limit_notify=True)
 
-		self.serializer = tweetSerializer.TweetSerializer(200)
+		self.serializer = tweetSerializer.TweetSerializer(200, 'W205-Assignment2-RC-0001')
 
 		signal.signal(signal.SIGINT, self.interrupt)
 
@@ -32,7 +33,7 @@ class TweetFetcher:
 
 	def search(self, q):
 		self.serializer.start()
-		for tweet in tweepy.Cursor(self.api.search,q=q).items(200):
+		for tweet in tweepy.Cursor(self.api.search,q=q).items():
 			with self._lock:
 				self.serializer.write(tweet)
 		self.serializer.end()
