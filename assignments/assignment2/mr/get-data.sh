@@ -1,24 +1,15 @@
 #!/bin/bash
-mkdir -p common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/
-mkdir -p common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/wat/
-mkdir -p common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/wet/
+mkdir -p tweets/json/chunks/
 
-ccfiles=(
-     'common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.gz'
-     'common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/wat/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.wat.gz'
-     'common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/wet/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.wet.gz'
+chunkfiles=(
+      'd9719c65-291a-4cd4-9c78-55eca5801f29-20150617004028.json'
+      '523beea8-c95f-41d1-82cb-fd6e1514cbf9-20150617024100.json'
+      '000981a9-cb5d-4f63-a418-c2e96a5b1ae2-20150617084710.json'
    );
 
-for f in ${ccfiles[@]}
+for f in ${chunkfiles[@]}
 do
-  mkdir -p `dirname $f`
-  echo "Downloading `basename $f` ..."
+  echo "Downloading $f ..."
   echo "---"
-  if [ "$(uname)" == "Darwin" ]; then
-    cd `dirname $f`
-    curl https://aws-publicdatasets.s3.amazonaws.com/$f -O
-    cd -
-  elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    wget https://aws-publicdatasets.s3.amazonaws.com/$f -O $f
-  fi
+  aws s3 cp s3://w205-assignment2-rc-0000/$f tweets/json/chunks/. 
 done

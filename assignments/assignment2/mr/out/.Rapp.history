@@ -1,0 +1,287 @@
+ate <- mean(group.treatment) - mean(group.control)
+ate
+group <- c(group.treatment, group.control)
+group
+randomize <- function() sample(c(rep(0,10),rep(1,10)))
+treatment <- randomize()
+treatment
+outcomes <- group.treatment * treatment + group.control*(1-treatment)
+outcomes
+randomize <- function() sample(c(rep(0,5),rep(1,5)))
+treatment <- randomize()
+treatment
+outcomes <- group.treatment * treatment + group.control*(1-treatment)
+outcomes
+est.ate <- function(outcome, treat) mean(outcome[treat==1]) - mean(outcome[treat==0])
+ate <- est.ate(outcomes, treatment)
+ate
+est.ate(outcomes, randomize())
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize()))
+plot(density(distribution.under.sharp.null))
+randomize <- function() sample(c(rep(0,20),rep(1,20)))
+treatment <- randomize()
+treatment
+randomize <- function() sample(c(rep(0,10),rep(1,10)))
+treatment <- randomize()
+treatment
+outcomes <- group.treatment * treatment + group.control*(1-treatment)
+outcomes
+treatment <- randomize()
+outcomes <- group.treatment * treatment + group.control*(1-treatment)
+outcomes
+treatment <- randomize()
+treatment
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize()))
+test.treatment <- group
+test.control <- group
+outcomes <- test.treatment * treatment + test.control*(1-treatment)
+outcomes
+group
+randomize <- function() sample(c(rep(0,10),rep(1,10)))
+treatment <- randomize()
+outcomes <- test.treatment * treatment + test.control*(1-treatment)
+outcomes
+treatment
+test.treatment
+test.control
+est.ate <- function(outcome, treat) mean(outcome[treat==1]) - mean(outcome[treat==0])
+ate <- est.ate(outcomes, treatment)
+est.ate(outcomes, randomize())
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize()))
+plot(density(distribution.under.sharp.null))
+group.treatment <- c(100, 100, 100, 50, 25, 25, 0,0,0,0)
+group.control <- c(25,20,15,15,10,5,5,5,0,0)
+group <- c(group.treatment, group.control)
+test.treatment <- group
+test.control <- group
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize()))
+plot(density(distribution.under.sharp.null))
+outcomes <- test.treatment * treatment + test.control*(1-treatment)
+est.ate <- function(outcome, treat) mean(outcome[treat==1]) - mean(outcome[treat==0])
+est.ate(outcomes, randomize())
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize()))
+plot(density(distribution.under.sharp.null))
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize()))
+plot(density(distribution.under.sharp.null))
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize()))
+plot(density(distribution.under.sharp.null))
+group.treatment <- c(500, 100, 100, 50, 25, 25, 0,0,0,0)
+group <- c(group.treatment, group.control)
+test.treatment <- group
+test.control <- group
+treatment <- randomize()
+outcomes <- test.treatment * treatment + test.control*(1-treatment)
+est.ate <- function(outcome, treat) mean(outcome[treat==1]) - mean(outcome[treat==0])
+ate <- est.ate(outcomes, treatment)
+est.ate(outcomes, randomize())
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize()))
+plot(density(distribution.under.sharp.null))
+abline(v=ate)
+mean(ate <= distribution.under.sharp.null)
+group
+group <- c(rep("Man",20),rep("Woman",20))
+group
+randomize <- function() sample(c(rep(0,20),rep(1,20)))
+randomize
+table(group, randomize())
+est.ate <- function(outcome, treat) mean(outcome[treat==1]) - mean(outcome[treat==0])#
+sim.normal.study <- function(){#
+    po.control <- c(seq(from = 1, to = 20), seq(from = 51, to = 70))#
+    po.treatment <- po.control#
+    treatment <- randomize()#
+    outcomes <- po.treatment * treatment + po.control * (1-treatment)#
+    ate <- est.ate(outcomes, treatment)#
+    n.women.treatment <- table(group, treatment)[2,2]#
+    return(list(ate = ate, n.women.treatment = n.women.treatment))#
+}
+results <- t(replicate(1000, sim.normal.study()))#
+plot(results)#
+randomize.blocked <- function(){#
+    c(#
+       sample(c(rep(0,10),rep(1,10))), #group A#
+       sample(c(rep(0,10),rep(1,10))) #group B#
+     ) #
+}
+results <- t(replicate(1000, sim.normal.study()))#
+plot(results)
+table(group, randomize.blocked())
+po.control <- c(seq(from = 1, to = 20), seq(from = 51, to = 70))
+po.treatment <- po.control + 10 #simulate effect of 10
+treatment.blocked <- randomize.blocked()
+outcomes.blocked <- po.treatment * treatment.blocked + po.control *(1-treatment.blocked)
+ate <- est.ate(outcomes.blocked, treatment.blocked)
+ate
+distribution.under.sharp.null.blocked <- replicate(5000,est.ate(outcomes.blocked, randomize.blocked()))
+plot(density(distribution.under.sharp.null), col="red", ylim=c(0,.17))
+abline(v=ate)
+mean(ate < distribution.under.sharp.null)
+lines(density(distribution.under.sharp.null.blocked), col="blue")
+distribution.under.sharp.null <- replicate(1000, est.ate(outcomes, randomize()))
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize()))
+results <- t(replicate(1000, sim.normal.study()))
+plot(results)
+group <- c(rep("Man",20),rep("Woman",20))
+group
+randomize <- function() sample(c(rep(0,20),rep(1,20)))
+table(group, randomize())
+est.ate <- function(outcome, treat) mean(outcome[treat==1]) - mean(outcome[treat==0])
+sim.normal.study <- function(){#
+    po.control <- c(seq(from = 1, to = 20), seq(from = 51, to = 70))#
+    po.treatment <- po.control#
+    treatment <- randomize()#
+    outcomes <- po.treatment * treatment + po.control * (1-treatment)#
+    ate <- est.ate(outcomes, treatment)#
+    n.women.treatment <- table(group, treatment)[2,2]#
+    return(list(ate = ate, n.women.treatment = n.women.treatment))#
+}
+results <- t(replicate(1000, sim.normal.study()))
+plot(results)
+results
+n.women.treatment
+results <- t(replicate(1000, sim.normal.study()))
+plot(results)
+po.control <- c(seq(from = 1, to = 20), seq(from = 51, to = 70))
+po.treatment <- po.control + 10 #simulate effect of 10
+po.control
+po.treatment
+treatment.blocked <- randomize.blocked()
+randomize.blocked <- function(){#
+    c(#
+       sample(c(rep(0,10),rep(1,10))), #group A#
+       sample(c(rep(0,10),rep(1,10))) #group B#
+     ) #
+}
+treatment.blocked <- randomize.blocked()
+outcomes.blocked <- po.treatment * treatment.blocked + po.control *(1-treatment.blocked)
+ate <- est.ate(outcomes.blocked, treatment.blocked)
+ate
+distribution.under.sharp.null.blocked <- replicate(5000,est.ate(outcomes.blocked, randomize.blocked()))
+plot(density(distribution.under.sharp.null), col="red", ylim=c(0,.17))
+randomize <- function() sample(c(rep(0,20),rep(1,20)))
+treatment <- randomize() #Conduct randomization for this experiment
+outcomes <- po.treatment * treatment + po.control*(1-treatment)
+est.ate <- function(outcome, treat) mean(outcome[treat==1]) - mean(outcome[treat==0])
+ate <- est.ate(outcomes, treatment) #Compute the average treatment
+ate <- est.ate(outcomes, treatment) #Compute the average treatmenteffect for this experiment#
+est.ate(outcomes, randomize())
+est.ate(outcomes, randomize())
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize()))
+plot(density(distribution.under.sharp.null), col="red", ylim=c(0,.17))
+abline(v=ate)
+mean(ate < distribution.under.sharp.null)
+lines(density(distribution.under.sharp.null.blocked), col="blue")
+mean(ate < distribution.under.sharp.null.blocked)
+ate <- est.ate(outcomes.blocked, treatment.blocked)
+abline(v=ate)
+plot(density(distribution.under.sharp.null), col="red", ylim=c(0,.17))
+abline(v=ate)
+mean(ate < distribution.under.sharp.null)
+lines(density(distribution.under.sharp.null.blocked), col="blue")
+mean(ate < distribution.under.sharp.null.blocked)
+po.control <- c(seq(from = 1, to = 20), seq(from = 51, to = 70))
+po.treatment <- po.control + 10 #simulate effect of 10
+treatment <- randomize()
+outcomes <- po.treatment * treatment + po.control * (1-treatment)
+summary(lm(outcomes ~ treatment)) #without block indicator
+treatment <- randomize()
+outcomes <- po.treatment * treatment + po.control * (1-treatment)
+summary(lm(outcomes ~ treatment)) #without block indicator
+summary(lm(outcomes ~ treatment + factor(group))) #with block
+n.classrooms <- 8
+n.students <- 16
+classroom.ids <- unlist(lapply(1:n.classrooms, function(x) rep(x,times=n.students)))
+? unlist
+? lapply
+classroom.ids
+lapply(1:n.classrooms, function(x) rep(x,times=n.students))
+all.classrooms <- unique(classroom.ids)
+all.classrooms
+classroom.level.noise <- rnorm(length(all.classrooms))
+classroom.level.noise
+? rnorm
+student.outcomes.control <- rnorm(length(classroom.ids)) + classroom.level.noise[classroom.ids]
+student.outcomes.control
+student.outcomes.treat <- student.outcomes.control + 0.75
+randomize.clustered <- function(){#
+        treat.classroom.ids <- sample(all.classrooms, n.classrooms/2)#
+        return(#
+                 as.numeric(classroom.ids %in% treat.classroom.ids)#
+) }
+randomize.clustered()
+treat <- randomize.clustered()
+outcomes <- treat * student.outcomes.treat + (1-treat) * student.outcomes.control
+ate <- est.ate(outcomes, treat)
+ate
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize.clustered()))
+plot(density(distribution.under.sharp.null))
+abline(v=ate)
+mean(ate < distribution.under.sharp.null) #p-value
+treat <- randomize.clustered()
+outcomes <- treat * student.outcomes.treat + (1-treat) * student.outcomes.control
+ate <- est.ate(outcomes, treat)
+ate
+distribution.under.sharp.null <- replicate(5000, est.ate(outcomes, randomize.clustered()))
+plot(density(distribution.under.sharp.null))
+abline(v=ate)
+mean(ate < distribution.under.sharp.null) #p-value
+randomize.ignorning.clustering <- function()#
+sample(c(rep(0,n.classrooms*n.students/#
+2),rep(1,n.classrooms*n.students/2)))
+randomize.ignorning.clustering()
+distribution.under.sharp.null.wrong <- replicate(5000, est.ate(outcomes, randomize.ignorning.clustering()))
+plot(density(distribution.under.sharp.null), ylim=c(0,1.5))
+lines(density(distribution.under.sharp.null.wrong))
+abline(v=ate)
+mean(ate < distribution.under.sharp.null.wrong) #p-value
+plot(density(distribution.under.sharp.null), ylim=c(0,1.5))
+lines(density(distribution.under.sharp.null.wrong))
+abline(v=ate)
+c1g1 <- c(rep(1, 52), rep(0, 48)
+)
+c1g1
+c1g0 <- c(rep(1,29), rep(0,71))
+j1g1 <- c(rep(1,37), rep(0, 63))
+j1g0 <- c(rep(1,34), rep(0,66))
+df <- data.frame(c1g1, c1g0, j1g1, j1g0)
+df.heaf
+df.head()
+df.head(10)
+summary(df)
+person <- c(rep(1,200), rep(1,200))
+grammar <- c(rep(1,100), rep(0,100), rep(1,100), rep(0,100))resp <- c(rep(1, 52), rep(0, 48), rep(1, 29), rep(0, 71), rep(1, 37))
+grammar <- c(rep(1,100), rep(0,100), rep(1,100), rep(0,100))
+resp <- c(rep(1, 52), rep(0, 48), rep(1, 29), rep(0, 71), rep(1, 37))
+person <- c(rep(1,200), rep(1,200))
+setwd('~/Documents/MIDS/W205/MIDS-205/assignments/assignment2/mr/out')
+setwd(""~/Documents/MIDS/W205/MIDS-205/assignments/assignment2/mr/out")
+setwd("~/Documents/MIDS/W205/MIDS-205/assignments/assignment2/mr/out")
+setwd("~/Documents/MIDS/W205/MIDS-W205/assignments/assignment2/mr/out")
+df <- read.csv("counts.csv", header=FALSE)
+head(df)
+hist(df)
+ls
+ls df
+ls.str
+ls.str()
+df.sorted <- df[order(-V1),]
+df.sorted <- df[order(1),]
+head(df.sorted)
+df.sorted <- df[order(2),]
+head(df.sorted)
+colnames(df) <- c("word","count")
+herad(df)
+head(df)
+df.sorted <- df[order(count), ]
+ls.str()
+df$count
+df.sorted <- df[order(count) , ]
+df.sorted <- df[order(df$count) , ]
+head(df.sorted)
+df.sorted <- df[order(-df$count) , ]
+head(df.sorted)
+hist(df$word)
+hist(df$count, df$word)
+hist(df[,1])
+hist(df[,2])
+hist(df[,2], col="word")
+hist(df[,2], freq=FALSE)
