@@ -48,9 +48,11 @@ chart. No stop word filtering was done. The graphed output is available as
  2. warriors.png
  3. both.png
 
-![Warriors Search](/hist/warriors.png "#Warriors")
-![NBAFinals2015 Search](/hist/nbafinals2015.png "#NBAFinals2015")
-![Warriors and NBAFinals2015 Search](/hist/warriors.png "#Warriors and #NBAFinals2015")
+![Warriors Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/warriors.png "#Warriors")
+![NBAFinals2015 Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/nbafinals2015.png "#NBAFinals2015")
+![Warriors and NBAFinals2015 Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/warriors.png "#Warriors and #NBAFinals2015")
+
+https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/Both_nltk.png
 
 ### NLTK Tokenizer ###
 
@@ -62,9 +64,9 @@ word plot available in the nltk module. The resulting word plots are:
  2. Warriors_nltk.png
  3. NBAFinals2015.png
 
-![Warriors Search](/hist/Warriors_nltk.png "#Warriors")
-![NBAFinals2015 Search](/hist/NBAFinals2015_nltk.png "#NBAFinals2015")
-![Warriors and NBAFinals2015 Search](/hist/Both_nltk.png "#Warriors and #NBAFinals2015")
+![Warriors Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/Warriors_nltk.png "#Warriors")
+![NBAFinals2015 Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/NBAFinals2015_nltk.png "#NBAFinals2015")
+![Warriors and NBAFinals2015 Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/Both_nltk.png "#Warriors and #NBAFinals2015")
 
  ## Conculusions ##
 
