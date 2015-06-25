@@ -7,6 +7,12 @@ from boto.s3.connection import S3Connection
 from boto.s3.connection import Location
 from boto.s3.key import Key 
 
+# This version is adapted for Assignment 2 so that tweets are serialized to AWS S3 storage.
+# The AWS access keys must be available as environment variables
+# Tweets are chunked into files with 200 tweets per file, which corresponds to ~ 1MB of raw JSON text
+# This minimizes the amount of data to send across the network to store the file in AWS and makes the
+# exposure of losing a large chunk of data much less at the expense of many more files.
+# Bucket keys (file names) are generated to be unique using a UUID followed by a time stamp and ending in '.json'
 
 # tweet serializer class from the activities document
 class TweetSerializer:

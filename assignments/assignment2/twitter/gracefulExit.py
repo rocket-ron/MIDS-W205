@@ -1,7 +1,7 @@
 import sys
 import signal
 
-# Graceful exit signal handler
+# Graceful exit signal handler - handle a CTRL-C interrupt
 class GracefulExit:
 	def __enter__(self):
 		self.SIGINT = signal.getsignal(signal.SIGINT)
