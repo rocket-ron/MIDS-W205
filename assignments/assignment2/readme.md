@@ -33,9 +33,9 @@ The S3 storage location is in the us-west-1 region, with the bucket name 'w205-a
 accessible.
 
 The chunked output from each search is in a subfolder per search:
- -NBAFinals2015
- -Warriors
- -WarriorsAndNBAFinals2015
+ - NBAFinals2015
+ - Warriors
+ - WarriorsAndNBAFinals2015
 
 ## Word Count Analysis ##
 
@@ -48,16 +48,16 @@ chart. No stop word filtering was done. The graphed output is available as
  2. warriors.png
  3. both.png
 
-### Warriors ###
+#### Warriors ####
 ![Warriors Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/Warriors.png "#Warriors")
 
-### NBAFinals2015 ###
+#### NBAFinals2015 ####
 ![NBAFinals2015 Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/NBAFinals2015.png "#NBAFinals2015")
 
 ### Warriors and NBAFinals2015 ###
 ![Warriors and NBAFinals2015 Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/both.png "#Warriors and #NBAFinals2015")
 
-### NLTK Tokenizer ###
+#### NLTK Tokenizer ####
 
 In the second scenario the Twitter .json files were processed by a simple Python script that extracts the tweet text for any english 
 language tweet, strips punctiation using the nltk RegexpTokenizer and filters for the nltk english stop word list. The stop word list
@@ -67,21 +67,21 @@ word plot available in the nltk module. The resulting word plots are:
  2. Warriors_nltk.png
  3. NBAFinals2015.png
 
-### Warriors (NLTK) ###
+#### Warriors (NLTK) ####
 ![Warriors Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/Warriors_nltk.png "#Warriors")
 
-### NBAFinals2015 (NLTK) ###
+#### NBAFinals2015 (NLTK) ####
 ![NBAFinals2015 Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/NBAFinals2015_nltk.png "#NBAFinals2015")
 
-### NBAFinals2015 and Warriors (NLTK) ###
+#### NBAFinals2015 and Warriors (NLTK) ####
 ![Warriors and NBAFinals2015 Search](https://github.com/rocket-ron/MIDS-W205/blob/assignment2/assignments/assignment2/hist/Both_nltk.png "#Warriors and #NBAFinals2015")
 
- ## Conculusions ##
+## Conclusions ##
 
- The EMR process was interesting and simple, but with only ~475K tweets to process was overkill and took a lot of time to spin up an 
- EMR cluster. 
+The EMR process was interesting and simple, but with only ~475K tweets to process was overkill and took a lot of time to spin up an 
+EMR cluster. 
 
- The NLTK library was easy to use and contains all the tools necessary to process the tweet texts with the addition of the stop word 
- filter. However, the stop word filter may be too extensive for tweets, especially for sentiment analysis. With 140 characters in a 
- tweet, even articles carry extra information. It is interesting to compare the results of the histograms.
+The NLTK library was easy to use and contains all the tools necessary to process the tweet texts with the addition of the stop word 
+filter. However, the stop word filter may be too extensive for tweets, especially for sentiment analysis. With 140 characters in a 
+tweet, even articles carry extra information. It is interesting to compare the results of the histograms.
 
