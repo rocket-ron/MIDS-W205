@@ -11,12 +11,16 @@ class {'::mongodb::globals':
 }->
 class {'::mongodb::server':
   verbose => true,
-  require => Class["system-update"]
+  auth	  => true,
+  bind_ip => ['0.0.0.0'],
+  require => Class["system-update"],
 }->
 class {'::mongodb::client':}
 
-mongodb::db { 'twitter_db':}
+mongodb::db { 'twitter_db':
+  user		=> 'user1',
+  password 	=> 'user1',
+}
 
 include system-update
-include mongodb
 include stdlib
