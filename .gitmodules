@@ -7,3 +7,6 @@
 [submodule "project/vagrant/puppet/bootstrap"]
 	path = project/vagrant/puppet/bootstrap
 	url = https://github.com/rocket-ron/puppet-bootstrap.git
+[submodule "project/vagrant/puppet/modules/vcsrepo"]
+	path = project/vagrant/puppet/modules/vcsrepo
+	url = https://github.com/puppetlabs/puppetlabs-vcsrepo.git
