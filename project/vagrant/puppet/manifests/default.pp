@@ -77,15 +77,6 @@ class user-creation {
   }
 }
 
-mongodb_user { testuser:
-  username	=> 'testuser',
-  ensure	=> present,
-  password_hash	=> mongodb_password('testuser','p@ssw0rd'),
-  database	=> twitter_db,
-  roles		=> ['readWrite','dbAdmin'],
-  tries		=> 10,
-  require	=> Class['mongodb::server'],
-}
 
 include install-git
 include epel-release
