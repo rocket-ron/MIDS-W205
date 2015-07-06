@@ -14,6 +14,12 @@ and then from the top directory of the project
 
     git checkout branch project
 
+Then
+
+    git submodule update --init --recursive
+
+to pick up the various Git repositories that are referenced.
+    
 That’s about it. All local commits will be accumulated, well, locally, until you do a push. To push your local commits to the branch, just do
 
     git push origin project
