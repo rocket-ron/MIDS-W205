@@ -12,35 +12,40 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
+  config.vm.box = "azure"
 
-  config.vm.box = "mongo"
+    config.vm.provider :azure do |azure|
+      azure.mgmt_certificate = '/Users/rcordell/Documents/MIDS/W205/MIDS-W205/project/vagrant/azure/ronmckea01.pem'
+      azure.mgmt_endpoint = 'https://management.core.windows.net'
+      azure.subscription_id = '651f1b6f-d652-4c9f-b1ba-3533acc3204a'
+      azure.storage_acct_name = 'mckrhcea01storage01' # optional. A new one will be generated if not provided.
 
-  config.vm.provider :aws do |aws, override|
-    override.nfs.functional = false
-    aws.access_key_id = "AKIAJFLYXRCK5GNNIPNQ"
-    aws.secret_access_key = "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"
-    aws.keypair_name = "AWS_EC2_VAGRANT"
+      azure.vm_image = '0b11de9248dd4d87b18621318e037d37__RightImage-CentOS-6.6-x64-v14.2.1'
+      azure.vm_user = 'rcordell' # defaults to 'vagrant' if not provided
+      azure.vm_password = 'pass123!' # min 8 characters. should contain a lower case letter, an uppercase letter, a number and a special character
 
-#    aws.ami = "ami-a7fdfee2"
-    aws.ami = "ami-777f9b33"
-    aws.region = "us-west-1"
-    aws.instance_type = "t2.medium"
-    override.ssh.username = "ec2-user"
-    override.ssh.private_key_path = "/Users/rcordell/.ssh/AWS_EC2_VAGRANT.pem"
-    aws.security_groups = ['vagrant']
-    aws.block_device_mapping = [{ 'DeviceName' => '/dev/sda1', 'Ebs.VolumeSize' => 60 }]
-    config.vm.provision :shell, :path => "../puppet/bootstrap/centos_6_x.sh"
+      azure.vm_name = 'mckrhcea01-mgo1' # max 15 characters. contains letters, number and hyphens. can start with letters and can end with letters and numbers
+      azure.cloud_service_name = 'mckrhcea01-mgo1' # same as vm_name. leave blank to auto-generate
+      azure.deployment_name = 'mckrhcea01-mgo1' # defaults to cloud_service_name
+      azure.vm_location = 'West US' # e.g., West US
+      azure.private_key_file = '/Users/rcordell/.ssh/azurekey.key'
+      azure.certificate_file = '/Users/rcordell/.ssh/azurekey.pem'
 
+      # Provide the following values if creating a *Nix VM
+      azure.ssh_port = '22'
+      config.vm.provision :shell, :path => "../puppet/bootstrap/centos_6_x.sh"
 
-    config.vm.provision :puppet do |puppet|
+      config.vm.provision :puppet do |puppet|
         puppet.manifests_path = "../puppet/manifests"
         puppet.module_path = "../puppet/modules"
         puppet.options = ['--verbose']
+      end
+
     end
 
-  end
+    config.ssh.username = 'YOUR USERNAME' # the one used to create the VM
+    config.ssh.password = 'YOUR PASSWORD' # the one used to create the VM
 
-  
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.

@@ -12,13 +12,22 @@ This will clone the entire project into your local directory. Make sure to speci
 
 and then from the top directory of the project
 
-    git checkout branch project
+    git checkout project
 
 Then
 
     git submodule update --init --recursive
 
 to pick up the various Git repositories that are referenced.
+
+To double check, do:
+
+    git branch
+    
+and you should see:
+
+      master
+    * project
     
 That’s about it. All local commits will be accumulated, well, locally, until you do a push. To push your local commits to the branch, just do
 
