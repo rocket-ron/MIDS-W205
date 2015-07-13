@@ -14,25 +14,30 @@ Vagrant.configure(2) do |config|
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "azure"
 
-    config.vm.provider :azure do |azure|
+  config.vm.boot_timeout = 1000
+  config.nfs.functional = false
+
+    config.vm.provider :azure do |azure, override|
       azure.mgmt_certificate = '/Users/rcordell/Documents/MIDS/W205/MIDS-W205/project/vagrant/azure/ronmckea01.pem'
       azure.mgmt_endpoint = 'https://management.core.windows.net'
       azure.subscription_id = '651f1b6f-d652-4c9f-b1ba-3533acc3204a'
       azure.storage_acct_name = 'mckrhcea01storage01' # optional. A new one will be generated if not provided.
 
-      azure.vm_image = '0b11de9248dd4d87b18621318e037d37__RightImage-CentOS-6.6-x64-v14.2.1'
-      azure.vm_user = 'rcordell' # defaults to 'vagrant' if not provided
-      azure.vm_password = 'pass123!' # min 8 characters. should contain a lower case letter, an uppercase letter, a number and a special character
+#      azure.vm_image = '0b11de9248dd4d87b18621318e037d37__RightImage-CentOS-6.5-x64-v14.1.5.1'
+      azure.vm_image = '5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-65-20150605'
+#      azure.vm_image = 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_10-amd64-server-20150612-en-us-30GB'
+      azure.vm_user = 'rcordell'
+        azure.ssh_private_key_file = File.expand_path('~/.ssh/id_rsa')  # This is my private SSH key
+        azure.ssh_certificate_file = File.expand_path('~/.ssh/ssh-cert.pem')  # This is the X509 certificate file generated from my private SSH key
 
-      azure.vm_name = 'mckrhcea01-mgo1' # max 15 characters. contains letters, number and hyphens. can start with letters and can end with letters and numbers
-      azure.cloud_service_name = 'mckrhcea01-mgo1' # same as vm_name. leave blank to auto-generate
-      azure.deployment_name = 'mckrhcea01-mgo1' # defaults to cloud_service_name
+      azure.vm_name = 'mckrhcea01-mgo2' # max 15 characters. contains letters, number and hyphens. can start with letters and can end with letters and numbers
+      azure.cloud_service_name = 'mckrhcea01-mgo2' # same as vm_name. leave blank to auto-generate
+      azure.deployment_name = 'mckrhcea01-mgo2' # defaults to cloud_service_name
       azure.vm_location = 'West US' # e.g., West US
-      azure.private_key_file = '/Users/rcordell/.ssh/azurekey.key'
-      azure.certificate_file = '/Users/rcordell/.ssh/azurekey.pem'
 
       # Provide the following values if creating a *Nix VM
       azure.ssh_port = '22'
+      config.ssh.pty = true  # corrects for the sudo requiring a tty on Centos distros
       config.vm.provision :shell, :path => "../puppet/bootstrap/centos_6_x.sh"
 
       config.vm.provision :puppet do |puppet|
@@ -43,55 +48,9 @@ Vagrant.configure(2) do |config|
 
     end
 
-    config.ssh.username = 'YOUR USERNAME' # the one used to create the VM
-    config.ssh.password = 'YOUR PASSWORD' # the one used to create the VM
+  config.ssh.username = 'rcordell' # the one used to create the VM
+  config.ssh.private_key_path = File.expand_path('~/.ssh/id_rsa') # this is my private SSH to use instead of the Vagrant insecure key
 
-  # Disable automatic box update checking. If you disable this, then
-  # boxes will only be checked for updates when the user runs
-  # `vagrant box outdated`. This is not recommended.
-  # config.vm.box_check_update = false
-
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
-
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
-
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  # config.vm.network "public_network"
-
-  # Share an additional folder to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
-
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
-  # end
-  #
-  # View the documentation for the provider you are using for more
-  # information on available options.
-
-  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
-  # such as FTP and Heroku are also available. See the documentation at
-  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
-  # config.push.define "atlas" do |push|
-  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
-  # end
 
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
