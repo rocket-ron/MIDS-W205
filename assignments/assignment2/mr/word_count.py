@@ -1,3 +1,7 @@
+##
+## Simple word counter
+##
+
 from collections import Counter
 ###
 from mrcc import CCJob
