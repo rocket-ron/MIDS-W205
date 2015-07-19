@@ -22,18 +22,17 @@ def date_partition(start,end):
    
 #   for d in date_partition(start,end):
 	
-if (len(sys.argv) > 2):
-	q = urllib.quote(sys.argv[2] + " from:" + sys.argv[1])
-else:
-	return -1
 
-if (len(sys.argv) > 3):
-	if (sys.argv[3] != None):
+q = "from:" + urllib.quote(sys.argv[1])
+# q = sys.argv[1]
+
+if (len(sys.argv) > 2):
+	if (sys.argv[2] != None):
 		start = datetime.datetime.strptime(sys.argv[2],xsdDateFormat) # start date
 		q = q + " since:" + start.strftime(xsdDateFormat)
 
-if (len(sys.argv) > 4):
-	if (sys.argv[4] != None):
+if (len(sys.argv) > 3):
+	if (sys.argv[3] != None):
 		end = datetime.datetime.strptime(sys.argv[3],xsdDateFormat)   # end date
 		q = q + " until:" + end.strftime(xsdDateFormat)
 
