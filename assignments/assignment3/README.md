@@ -33,18 +33,21 @@ This program uses the MongoDB aggregation pipeline to:
 
 The aggregation is a single "statement". Indexes have been created on the fields of `lang`, and `retweeted_status.id_str` from the MongoDB shell.
 
+*NOTE:* The instructions asked for the top 30 retweets and their corresponding users. The top 30 retweets were pulled, but some users were responsible for more than one of the top 30 retweets, so there are fewer than 30 users responsible for the top 30 retweets.
+
 ### 2.2 Compute the Lexical Diversity of the users of all tweets
 This step is one of the reasons the tweet data was placed in the db_restT database and left there from step **1.2**. To extract all the users from all the tweets gathered and compute the lexical diversity of each user's tweet corpus the program `userTimeline.py` was created. This program uses a similar pattern to other Tweet REST API programs created for previous assignments in that there is the main program `userTimeline.py` that uses a `TimelineFetcher` class to fetch the user timeline and a `MongoTweetAnalyzer` to perform the analysis and store the results.
 
 The `userTimeline.py` program performs a MongoDB search for distinct user id's from the `restT` collection (where the tweets are stored) and filters for english only. The list of user ids is then fed into the `TimelineFetcher` class which uses a Tweepy `Cursor` object to query the Twitter REST API for the user's timeline of the most recent 3200 tweets (the maximum allowed via this API). The text of all the tweets are gathered, filtered for urls with a regex and fed to the `MongoTweetAnalyzer` class. The `MongoTweetAnalyzer` class uses the NTLK library's stop words and extends them for things like 'rt', 'co', single digit numerals, etc. The resulting text is tokenized, resulting in a List of tokens, which is used to create a Counter() instance, which does the work of accumulating similar words into a dictionary with the word counts. Finally the lexical diversity is calculated as the total number of unique words divided by the total number of words.
 
-The Counter class is used as the postings element of a dictionary, along with the Twitter user_id, word count and unique word count and computed diversity score. The resulting dictionary is stored in the MongoDB collection called `lexdiv`. The structure of the documents in the `lexdiv` collection is:
+The Counter class is used as the postings element of a dictionary, along with the Twitter user_id, word count and unique word count and computed diversity score. The resulting dictionary is stored in the MongoDB collection called `lexdiv2`. The structure of the documents in the `lexdiv2` collection is:
 
-    { user_id       : string (64-bit integer string representation), 
-      word_count    : integer, 
-      unique_count  : integer,
-      diveristy     : float (ranges from 0 - 1),
-      postings      : dict/sub document
+    { user_id         : string (64-bit integer string representation), 
+      followers_count : integer (number of followers of this user),
+      word_count      : integer, 
+      unique_count    : integer,
+      diveristy       : float (ranges from 0 - 1),
+      postings        : dict/sub document
         { term : count }
     }
 
@@ -55,11 +58,15 @@ The program `lexicalDiversity.py` is used to query the `lexdiv2` collection of c
 
 #### Lexical Diversity of the 6000+ Users
 
-[insert graphic here]
+This graphic is a histogram of the lexical diversity of the 6000+ users for whom complete follower data was gathered, sequenced by user.
+
+![Lexical Diversity of 6000+ Users](https://github.com/rocket-ron/MIDS-W205/blob/assignment3/assignments/assignment3/LexicalDiversitySequence.png)
 
 #### Lexical Diversity by Follower Count
 
-[insert graphic here]
+This graphic is a scatterplot of the lexical diversity by follower count, with a cutoff at 2000 followers. It's an interesting graph in that it appearts those with fewer followers correlated with a higher lexical diversity.
+
+![Lexical Diversity by Follower Count](https://github.com/rocket-ron/MIDS-W205/blob/assignment3/assignments/assignment3/LexicalDiversityByFollowerCount.png)
 
 ### 2.3 Followers of the Top 30 Retweeters
 This part of the assignment has been the most difficult to practically implement because the API that returns followers is not particularly fast. When a Twitter user has a lot of followers it can take days to retrieve all them; in fact for the #1 retweeter from **2.1** all the followers are still being gathered. This is despite using three Twitter API keys to run parallel isntances of the follower gathering code. Because of this limitation, it is not practical to perform a delta of followers. I could have made the choice to limit the number of followers to 100 (or some number) per user, but it's an arbitrary and essentially meaningless thing to do considering the topic of the assignment. If I had more time I would have changed my strategy to rotate Twitter API keys such that when a timeout rate limit is hit using one set of keys, the program uses the last returned follower id to query from that point under a different set of keys. In this way the time gaps can be eliminated and the retrieval process sped up. But as I said, I'm out of time to implement it. In fact, even starting with the #30 in the top 30 list it took 48 hours to pull all the followers. Therefore only this user will have a true follower delta calculated.
