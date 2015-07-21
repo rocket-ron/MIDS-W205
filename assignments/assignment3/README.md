@@ -94,6 +94,7 @@ TBD
 The `mongoBackup.py` program uses the `subprocess` Python module to invoke the mongodump utility to dump the monogdb contents to a specified location. This location is then compressed into a gzip'ed tar file named `mongoBackup-` then the current time. For example, `mongoBackup-201507192205344.tar.gz`. Finally, the compressed file is uploaded to an S3 bucket named `w205-rlc-mongobackups` with the same time stamp appended. Chunked file IO is used to upload the file as it is several GB or more in size.The S3 bucket is set to `public-read`.
 
 [This is the backup taken at 2015-07-19 22:13:47](https://s3-us-west-1.amazonaws.com/w205-rlc-mongobackups-20150719221347/mongoBackup-20150719221347.tar.gz)
+*WARNING* This will download the tar.gz file directly.
 
 The `mongoBackup.py` program has a number of command line arguments. The output of the help command gives the information about the arguments:
 
@@ -118,3 +119,9 @@ The `mongoBackup.py` program has a number of command line arguments. The output 
       -i INFILE, --infile INFILE
                             restore file name. If S3 bucket is specified, the file
                             in the S3 bucket
+
+## A Note About AWS and Twitter Keys
+All the programs in this set rely on the AWS keys being set up in a local user AWS .config file, and any EC2 .pem keys in a secure place like the local user ~/.ssh directory. The keys are referenced by environment variable names and therefore the keys themselves are not visible in any source code.
+
+Twitter API keys are stored in the local user ~/.bash_profile and exported as environment variables. There are several sets of Twitter API keys used in order to allow faster and/or parallel operations on the Twitter API. None of the API keys will appear in source code as they are referenced by their environment variable names.
+
