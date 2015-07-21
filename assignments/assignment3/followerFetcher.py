@@ -1,7 +1,7 @@
 import signal
 import threading
 import tweepy
-from mongoFollowerSerializer import MongoFollowerSerializer
+from mongoFollowerSerializer2 import MongoFollowerSerializer
 import twitterAuth
 import os
 import re
