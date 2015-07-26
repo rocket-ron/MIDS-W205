@@ -1,6 +1,8 @@
 import sys
 import datetime
 
+# updated for Assignment 2
+
 xsdDatetimeFormat = "%Y-%m-%dT%H:%M:%S"
 xsdDateFormat = "%Y-%m-%d"
 

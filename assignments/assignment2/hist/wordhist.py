@@ -1,3 +1,7 @@
+## Read the output of the EMR word count job and assemble the word counts
+## into a dictionary that can then be used to plot a histogram of word
+## frequencies for the top 30 words
+
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 import StringIO

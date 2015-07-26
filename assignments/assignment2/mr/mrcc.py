@@ -1,3 +1,16 @@
+## AWS EMR mrcc job
+##
+## Process the tweet data gathered and stored in AWS S3. Filenames will be provided via the invocation
+## Count the words in all of the tweets across all the .json files in the S3 location
+##
+## to run the mrcc job, do the following:
+##
+## 1. tar -cvzf mrcc.py.tar.gx mrcc.py
+## 2. make sure the tar file is in the mrjob directory
+## 3. python word_count.py -r emr --conf-path mrjob.conf --python-archive mrcc.py.tar.gz --no-output --output-dir s3://bucket-name --source s3 input input/inputfile
+## Make sure the inputfile has the list of bucket keys to include (filenames)
+
+
 import gzip
 #
 import boto

@@ -5,6 +5,10 @@ import StringIO
 import time
 import json
 
+# Check the time series of the chunked files after they have been captured
+# this allows a check to see if there is a gap or other anomolies in gathering the
+# twitter search data
+
 conn = S3Connection(host="s3-us-west-1.amazonaws.com")
 bucket = conn.get_bucket('W205-Assignment2-RC-0000'.lower())
 

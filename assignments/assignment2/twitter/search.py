@@ -16,15 +16,7 @@ def datetime_partition(start,end,duration):
 def date_partition(start,end):
    return datetime_partition(start,end,datetime.timedelta(days=1))
 
-# if __name__ == "__main__":
-#   start = datetime.datetime.strptime(sys.argv[1],xsdDateFormat) # start date
-#   end = datetime.datetime.strptime(sys.argv[2],xsdDateFormat)   # end date
-   
-#   for d in date_partition(start,end):
-	
-
 q = urllib.quote(sys.argv[1])
-# q = sys.argv[1]
 
 if (len(sys.argv) > 2):
 	if (sys.argv[2] != None):
