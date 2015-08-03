@@ -49,6 +49,10 @@ class python-modules {
     command => 'pip install pymongo',
     require => Class["upgrade-pip"],
   }
+  exec { 'termcolor':
+    command => 'pip install termcolor',
+    require => Class["upgrade-pip"],
+  }
 }
 
 class {'::mongodb::globals':
