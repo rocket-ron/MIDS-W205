@@ -105,7 +105,7 @@ if __name__ == '__main__':
         """Extract a sample of tweets from remote mongo instance and predict 
         via a previously trained classifier object"""
         t0 = time.time()
-        conn=pymongo.MongoClient(host='52.8.248.140',port=27017)
+        conn=pymongo.MongoClient(host='54.153.43.230',port=27017)
         tweets = conn['twitter_db'][term]
         predict_tweets=list(tweets.find().limit(count))
         t1 = time.time()
