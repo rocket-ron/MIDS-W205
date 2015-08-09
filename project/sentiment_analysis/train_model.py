@@ -10,7 +10,7 @@ import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import svm
 import sklearn.metrics as m
-from sklearn.externals import joblib
+#from sklearn.externals import joblib
 
 
 if __name__ == '__main__':
