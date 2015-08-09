@@ -9,25 +9,31 @@ Created on Mon Jul  6 19:03:10 2015
 import re
 
 from mrjob.job import MRJob
-import sklearn
-
-data=[1,2,3,3,3,4,4,4,3,4,5,2,1,5]
+#import sklearn
 
 class MRWordFrequencyCount(MRJob):
 
     def mapper(self, _, line):
-        for i in data:
-            yield i, 1
+        """Parse tweets from input, remove non-alphanumeric characters
+        and return key,value pair for each word"""
+        tweet=line.split(",")[1].lower()
+        tweet=re.sub(r'[^a-z 0-9]','', tweet)
+        words=tweet.split()
+        for word in words:
+            yield word, 1
 
     def reducer(self, key, values):
+        """Aggregate total instances of words, and only return those that appear
+        more than 10,000 times"""
         total=sum(values)
-        yield key, total
+        if total>10000: #put cutoff here
+            yield key, total
 
 if __name__ == '__main__':
     MRWordFrequencyCount.run()
 
 #To run locally:
-#Simple version: ./emr_test.py test.csv
+#Simple version: ./emr_test.py WC2015.csv
 
 #To run on EMR:
 #python emr_test.py -r emr --conf-path mrjob.conf s3://hamlin-mids-assignment4/input/WC2015.csv
