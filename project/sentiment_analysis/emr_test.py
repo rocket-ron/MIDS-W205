@@ -9,7 +9,7 @@ Created on Mon Jul  6 19:03:10 2015
 import re
 
 from mrjob.job import MRJob
-#import sklearn
+import sklearn
 
 class MRWordFrequencyCount(MRJob):
 
