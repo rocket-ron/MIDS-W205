@@ -1,0 +1,12 @@
+[submodule "project/vagrant/puppet/modules/stdlib"]
+	path = project/vagrant/puppet/modules/stdlib
+	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
+[submodule "project/vagrant/puppet/modules/mongodb"]
+	path = project/vagrant/puppet/modules/mongodb
+	url = https://github.com/puppetlabs/puppetlabs-mongodb.git
+[submodule "project/vagrant/puppet/bootstrap"]
+	path = project/vagrant/puppet/bootstrap
+	url = https://github.com/rocket-ron/puppet-bootstrap.git
+[submodule "project/vagrant/puppet/modules/vcsrepo"]
+	path = project/vagrant/puppet/modules/vcsrepo
+	url = https://github.com/puppetlabs/puppetlabs-vcsrepo.git
