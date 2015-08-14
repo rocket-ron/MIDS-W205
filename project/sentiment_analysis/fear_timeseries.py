@@ -9,6 +9,7 @@ Created on Mon Jul  6 19:03:10 2015
 import pickle
 
 from mrjob.job import MRJob
+from datetime import datetime
 
 with open("classifier.pkl","rb") as f:
     tlc=pickle.load(f)
@@ -28,14 +29,20 @@ class MRFearTweetCount(MRJob):
             tweet=line.split("<split>")
             text=tweet[0]
             user=tweet[1]
-            followers=int(tweet[2])
+            date=datetime.strptime(tweet[3],"%c").strftime("%x")
             emotion=predict_one(text,tlc,vec)
             if emotion=='fear':
-                yield user,followers
+                yield date,1
+            else:
+                yield date,0
 
     def reducer(self, key, values):
-        total=sum(values)
-        yield key, total
+        val,count=0,0
+        # gotta write an aggregator to both count and add values at the same time
+        for i in values:
+            count += 1
+            val += i     
+        yield key, val/float(count)
 
 if __name__ == '__main__':
     MRFearTweetCount.run()

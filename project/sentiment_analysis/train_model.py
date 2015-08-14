@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2.7
 # Based on code from:
 # https://gist.github.com/bonzanini/c9248a239bbab0e0d42e/download#
 # Full discussion:
@@ -7,6 +7,7 @@
 
 import time
 import pickle
+import sys
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import svm
@@ -18,7 +19,8 @@ if __name__ == '__main__':
     
     #Build main corpus
     corpus=[]
-    with open('tweets-clean.txt','rb') as tsv:
+#    with open('tweets-clean.txt','rb') as tsv:
+    with open(sys.argv[1], 'rb') as tsv:
         for line in tsv:
             raw=line.strip().split('\t')
             insert={'id':raw[0][:-1],'text':raw[1],'emotion':raw[2][3:]}
