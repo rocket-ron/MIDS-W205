@@ -18,7 +18,7 @@ The scraper extracts the tweets using the Beautiful Soup Python module to locate
  - tweet text
  - time (seconds since epoch)
  
-The [output file is located on S3](httpds://w205-rcordell-assignment4/.s3.amazonaws/WC2015.csv). The CSV uses a delimiter of '|' so as to preserve some of the punctuation in the tweet text which may be commas. The file contains 128,948 entries.
+The output file is located [on S3](httpds://w205-rcordell-assignment4.s3.amazonaws/WC2015.csv). The CSV uses a delimiter of '|' so as to preserve some of the punctuation in the tweet text which may be commas. The file contains 128,948 entries.
 
 ### Data Cleanup:
 #### Pesky Carriage Returns and Line Feeds
