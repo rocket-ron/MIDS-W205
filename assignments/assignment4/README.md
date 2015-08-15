@@ -8,7 +8,7 @@ Write an acquisition program that can acquire the tweets between June 6th and Ju
 ### Solution:
 To acquire historical tweets for the FIFA WWC event requires using the [Twitter web search](http://twitter.com/search). Historical tweets are not available from the Twitter REST API. Therefore a web screen scraper is required to harvest the tweets.
 
-The `fifa.py` program performs the web-scraping function against the Twitter search web page. The program as delivered consists of two parts: setting up the initial search using the query, and then paging through the results. The scraper mimics what happens when a user interacts with the search through a browser, scrolling down to get the next page of tweets. Each page is loaded via an AJAX call back to the Twitter search server and placed on the web page as a set of HTML list elements, about 20 tweets per "page". The second part of the program is identical to the first except that instead of sending the initial query, the parameters necessary for the AJAX call are sent instead. The AJAX parameters consist of the query, the type of response, the language and the current position in the pages of tweets as given by the last tweet id.
+The `fifa.py` program performs the web-scraping function against the Twitter search web page. The program consists of two parts: setting up the initial search using the query, and then paging through the results. The scraper mimics what happens when a user interacts with the search through a browser, scrolling down to get the next page of tweets. Each page is loaded via an AJAX call back to the Twitter search server and placed on the web page as a set of HTML list elements, about 20 tweets per "page". The second part of the program is identical to the first except that instead of sending the initial query, the parameters necessary for the AJAX call are sent instead. The AJAX parameters consist of the query, the type of response, the language and the current position in the pages of tweets as given by the last tweet id.
 
 The scraper extracts the tweets using the Beautiful Soup Python module to locate the HTML list items that contain the tweets and associated metadata. The information is written in CSV format to a local file. The extracted information from the HTML is:
  - tweet id
@@ -17,7 +17,8 @@ The scraper extracts the tweets using the Beautiful Soup Python module to locate
  - screen name
  - tweet text
  - time (seconds since epoch)
-The output file is s3://w205-rcordell-assignment4/WC2015.csv and uses a delimiter of '|' so as to preserve some of the punctuation in the tweet text which may be commas. The resulting file contains 128,948 entries.
+ 
+The (output file is located on S3)[httpds://w205-rcordell-assignment4/.s3.amazonaws/WC2015.csv]. The CSV uses a delimiter of '|' so as to preserve some of the punctuation in the tweet text which may be commas. The file contains 128,948 entries.
 
 ### Data Cleanup:
 #### Pesky Carriage Returns and Line Feeds
