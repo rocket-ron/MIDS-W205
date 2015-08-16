@@ -48,7 +48,7 @@ class MRFearTweetCount(MRJob):
         self.increment_counter('group_1', 'total_tweets', 1)
         if 'user' in tweet and 'text' in tweet and 'created_at' in tweet:
             text = tweet['text']
-            user = tweet['user']['id_str']
+            user = tweet['user']['name']
             date_str = (tweet['created_at']).replace("+0000 ","")
             date = datetime.strptime(date_str,"%a %b %d %H:%M:%S %Y").strftime("%x")
             emotion = predict_one(text, tlc, vec)
