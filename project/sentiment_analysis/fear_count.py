@@ -87,3 +87,4 @@ if __name__ == '__main__':
 
 #To run on EMR:
 #python fear_count.py -r emr --no-output --output-file s3://w205-rcordell-project/emr/fearcounts --conf-path mrjob.conf s3://w205-rcordell-project/emr/data/ebola.json
+
