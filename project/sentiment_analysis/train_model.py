@@ -7,6 +7,10 @@
 
 import time
 import pickle
+import sys
+from boto.s3.connection import S3Connection
+from boto.s3.key import Key
+import StringIO
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import svm
@@ -18,7 +22,8 @@ if __name__ == '__main__':
     
     #Build main corpus
     corpus=[]
-    with open('tweets-clean.txt','rb') as tsv:
+#    with open('tweets-clean.txt','rb') as tsv:
+    with open(sys.argv[1], 'rb') as tsv:
         for line in tsv:
             raw=line.strip().split('\t')
             insert={'id':raw[0][:-1],'text':raw[1],'emotion':raw[2][3:]}
@@ -75,7 +80,22 @@ if __name__ == '__main__':
     classifier_liblinear = svm.LinearSVC()
     trained_liblinear_classifier=train_classifier(classifier_liblinear,train_vectors, train_labels, test_vectors, test_labels)
     #joblib.dump(trained_liblinear_classifier, 'class.pkl', compress=9)   
-    with open( "classifier.pkl", "wb" ) as f:
-        pickle.dump(trained_liblinear_classifier,f)
-    with open( "vectorizer.pkl", "wb" ) as v:
-        pickle.dump(vectorizer,v)
+#    with open( "classifier.pkl", "wb" ) as f:
+#        pickle.dump(trained_liblinear_classifier,f)
+#    with open( "vectorizer.pkl", "wb" ) as v:
+#        pickle.dump(vectorizer,v)
+
+    conn = S3Connection(host="s3-us-west-1.amazonaws.com")
+    bucket = conn.get_bucket('w205-rcordell-project')
+    f_key = bucket.get_key('emr/classifier.pkl')
+    v_key = bucket.get_key('emr/vectorizer.pkl')
+
+    f_obj = StringIO.StringIO(pickle.dumps(trained_liblinear_classifier))
+    v_obj = StringIO.StringIO(pickle.dumps(vectorizer)
+
+    f_key.set_contents_from_file(f_obj)
+    v_key.set_contents_from_file(v_obj)
+
+    f_obj.close()
+    v_obj.close()
+    conn.close()
