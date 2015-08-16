@@ -19,7 +19,7 @@ import sklearn.metrics as m
 
 
 if __name__ == '__main__':
-    
+
     #Build main corpus
     corpus=[]
 #    with open('tweets-clean.txt','rb') as tsv:
@@ -28,7 +28,7 @@ if __name__ == '__main__':
             raw=line.strip().split('\t')
             insert={'id':raw[0][:-1],'text':raw[1],'emotion':raw[2][3:]}
             corpus.append(insert)
-    
+
     def process_tweets (corpus,emotion):
         """extracts tweets from main corpus for a particular emotion"""
         data=[]
@@ -41,7 +41,7 @@ if __name__ == '__main__':
                 except UnicodeEncodeError:
                     continue
         return data,labels
-    
+
     #Parse fear/joy tweets out of main corpus, split into train (75%) and test (25%)
     fear_tweets,fear_labels=process_tweets(corpus,'fear')
     joy_tweets,joy_labels=process_tweets(corpus,'joy')
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     test_labels = fear_labels[fear_cutoff:] + joy_labels[joy_cutoff:]
 
     def train_classifier (classifier, train_vectors, train_labels, test_vectors, test_labels):
-        """Trains an untrained classifier object based on vectorized training data, 
+        """Trains an untrained classifier object based on vectorized training data,
         then tests for accuracy, precision, and recall based on vectorized test data"""
         t0 = time.time()
         classifier.fit(train_vectors, train_labels)
@@ -74,8 +74,8 @@ if __name__ == '__main__':
     vectorizer = TfidfVectorizer(min_df=5,max_df = 0.8,sublinear_tf=True,use_idf=True)
     train_vectors = vectorizer.fit_transform(train_data)
     test_vectors = vectorizer.transform(test_data)
-     
-    
+
+
     # Perform classification with SVM, kernel=linear
     classifier_liblinear = svm.LinearSVC()
     trained_liblinear_classifier=train_classifier(classifier_liblinear,train_vectors, train_labels, test_vectors, test_labels)
