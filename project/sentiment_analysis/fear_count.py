@@ -46,7 +46,7 @@ def predict_one (predict_tweet,trained_classifier, vectorizer):
     predict_vectors = vectorizer.transform(predict_data)
     prediction=trained_classifier.predict(predict_vectors)
     return prediction
-        
+
 class MRFearTweetCount(MRJob):
 
     INPUT_PROTOCOL = JSONValueProtocol
@@ -83,6 +83,8 @@ if __name__ == '__main__':
 
 #To run locally:
 #Simple version: ./fear_count.py test.csv
+# To gather from Mongo: python ./get_tweets.py | python ./fear_count.py > test_data.csv
 
 #To run on EMR:
 #python fear_count.py -r emr --no-output --output-file s3://w205-rcordell-project/emr/fearcounts --conf-path mrjob.conf s3://w205-rcordell-project/emr/data/ebola.json
+
