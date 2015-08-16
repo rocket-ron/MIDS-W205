@@ -14,13 +14,13 @@ with open("classifier.pkl","rb") as f:
     tlc=pickle.load(f)
 with open("vectorizer.pkl","rb") as v:
     vec=pickle.load(v)
-    
+
 def predict_one (predict_tweet,trained_classifier, vectorizer):
     predict_data=[predict_tweet]
     predict_vectors = vectorizer.transform(predict_data)
     prediction=trained_classifier.predict(predict_vectors)
     return prediction
-        
+
 class MRFearTweetCount(MRJob):
 
     def mapper(self, _, line):
@@ -42,6 +42,7 @@ if __name__ == '__main__':
 
 #To run locally:
 #Simple version: ./fear_count.py test.csv
+# To gather from Mongo: python ./get_tweets.py | python ./fear_count.py > test_data.csv
 
 #To run on EMR:
-#python fear_count.py -r emr --conf-path mrjob.conf s3://hamlin-mids-mapreduce/input/test.csv
+#python fear_count.py -r emr --conf-path mrjob.conf --python-archive train_model.py.tar.gz s3://hamlin-mids-mapreduce/input/test.csv
