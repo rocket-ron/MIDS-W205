@@ -10,6 +10,7 @@ import pickle
 
 
 from mrjob.job import MRJob
+from mrjob.step import MRStep
 from mrjob.protocol import JSONProtocol, JSONValueProtocol
 
 """
@@ -50,18 +51,32 @@ class MRFearTweetCount(MRJob):
 
     INPUT_PROTOCOL = JSONValueProtocol
 
-    def mapper(self, _, tweet):
-            if 'user' in tweet and 'text' in tweet and 'followers_count' in tweet['user']:
-                text=tweet['text']
-                user=tweet['user']['id_str']
-                followers=int(tweet['user']['followers_count'])
-                emotion=predict_one(text,tlc,vec)
-                if emotion=='fear':
-                    yield user,followers
+    def mapper_get_fear_counts(self, _, tweet):
+        self.increment_counter('group_1', 'total_tweets', 1)
+        if 'user' in tweet and 'text' in tweet and 'followers_count' in tweet['user']:
+            text=tweet['text']
+            user=tweet['user']['id_str']
+            followers=int(tweet['user']['followers_count'])
+            emotion=predict_one(text,tlc,vec)
+            if emotion=='fear':
+                self.increment_counter('group_1', 'fear_tweets', 1)
+                yield user,followers
 
-    def reducer(self, key, values):
-        total=sum(values)
-        yield key, total
+    def combiner_count_fear(self, key, values):
+        yield key, sum(values)
+
+    def reducer_count_fear(self, user, count):
+        yield None, (sum(count), user)
+
+    def sort_counts(self, _, counts):
+        yield None, sorted(counts, reverse=True)
+
+    def steps(self):
+        return [
+            MRStep(mapper=self.mapper_get_fear_counts,
+                   combiner=self.combiner_count_fear,
+                   reducer=self.reducer_count_fear),
+            MRStep(reducer=self.sort_counts)]
 
 if __name__ == '__main__':
     MRFearTweetCount.run()
