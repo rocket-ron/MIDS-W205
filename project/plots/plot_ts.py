@@ -47,7 +47,7 @@ for graph in cats:
 	plt.ylabel('% Fearful Tweets')
 
 	plt.xlabel('Date')
-	plt.title('#%s Fear Trends'%graph)
+	plt.title('#%s Fear Trends'%graph,fontsize = 22)
 
 	plt.xticks(ind+width/2,labels, rotation = 'vertical')
 
