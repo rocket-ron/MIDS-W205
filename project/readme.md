@@ -9,5 +9,5 @@ The code is organized into four main directories.  Each contains its own readme 
 - **dataChecks**: Contains code for validating and cleaning stored data and moving data to different storage media
 - **plots**: Code for creating final output visualizations based on results of MapReduce jobs. Also contains .png versions of the created visualizations themselves.
 - **sentiment_analysis**: Main directory for all code related to the fear classification of tweets and associated MapReduce jobs.  Contains a subdirectory with all intermediate code used for prototyping and testing as well.
-- **tweet_collection**: TODO add tweet code from other repo
+- **twitter**: All code required to gather tweets from the twitter API and serialize to a variety of formats
 - **vagrant**: Contains the necessary setup files to easily spin up our collection infrastructure in a variety of different environments, including EC2 instances, local VMs, and others.
