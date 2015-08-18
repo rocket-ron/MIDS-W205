@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2.7
 # Based on code from:
 # https://gist.github.com/bonzanini/c9248a239bbab0e0d42e/download#
 # Full discussion:
